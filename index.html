@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<link href="ionicons-2.0.1/ionicons.min.css" rel="stylesheet">
+	
+	<!-- custom css -->
+	<style>
+	
+		.dropdown {
+			margin-left: auto;
+			margin-right: auto;
+			width: 90%;
+			height: 40px;
+		}
+
+		label {
+			-moz-border-radius: 4px !important;
+			-webkit-border-radius: 4px !important;
+			border-radius: 4px !important;
+		}
+		
+		input[type="number"]
+		{
+			height: 35px !important;
+		}
+		
+		.cbox {
+		   padding: 10px 10px 10px 10px;
+		   padding-bottom: 50px;
+		}
+		
+		
+	</style>
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+	<script src="js/converter.js"></script>
+	<script src="js/jquery-3.2.0.min.js"></script>
+	<script>
+	$("#db1 *").attr("disabled", "disabled").off('click');
+	$("#db2 *").attr("disabled", "disabled").off('click');
+	</script>
+	<script>onload=commentsOnload</script>
+  </head>
+  <body ng-app="starter" >
+
+    <ion-pane>
+      <ion-header-bar class="bar-stable" align-title="center">
+        <h1 class="title">Common Unit Converter</h1>
+      </ion-header-bar>
+	  
+      
+	  <ion-content overflow-scroll="true">
+	  
+	  <!--<ion-slides  options = "{pagination: false}">
+	  <ion-slide-page>-->
+	  
+	  
+	  <div style="height: 10px; ">
+	  
+	  </div>
+	  
+	  <!--<img id="topImage" style="z-index: -1px; width: 80%; text-align: center; margin-left: auto; margin-right: auto; margin-top: 0px; position: absolute; top: -30%; overflow: hidden; left: 0; right:0;" src="img/scale3.png">-->
+	  
+
+		<div class="list ">
+
+		  <label class="item item-input item-select dropdown ">
+			<form >
+			<select id="dropDown" onchange="selectMeasurement();">
+			  <option  value="1" selected>Weight</option>
+			  <option value="2" >Height</option>
+			  <option value="3">Temperature</option>
+			</select>
+			<form>
+		  </label>
+		</div>
+	  
+		
+	
+		
+		<!-- Converter -->
+		<div class="list list-inset">
+		<div id="firstdiv" style=" text-align: center"> 
+		  <label style="display:inline-block; width: 80%; " class="item item-input">
+			<input placeholder="Kilogram" type="number" id="kgTo" onkeyup="myFunction()">
+			</label>
+			<button style="display:inline-block; width: 10%"  class="button " >Kg</button>  
+		</div>
+		<div id="db1" style="display: none">
+		<div id="firstdivWt"  style=" text-align: center"> 
+			<label style="display:inline-block; width: 80%; "   class="item item-input">
+				<input placeholder="Kilogram" type="number" id="kgTo2" onkeyup="myFunction()">
+			</label>
+			<button style="display:inline-block; width: 10%"  class="button " >Kg</button>  
+		</div>
+		<div id="firstdivTemp"  style=" text-align: center"> 
+		  <label style="display:inline-block; width: 80%; "  class="item item-input">
+			<input placeholder="Celcius" type="number" id="csTo" onkeyup="myFunction()">
+			</label>
+			<button style="display:inline-block; width: 10%"  class="button " >°C</button>  
+		</div>
+		<div id="firstdivHt"  style=" text-align: center"> 
+		  <label style="display:inline-block; width: 30%; " class="item item-input">
+			<input placeholder="Feet" type="number" id="ftTo" onkeyup="myFunction()">
+			</label>
+			<button style="display:inline-block; width: 7%"  class="button " >Ft</button>
+			<label style="display:inline-block; width: 30%; " class="item item-input">
+			<input placeholder="Inch" type="number" id="inTo" onkeyup="myFunction()">
+			</label>
+			<button style="display:inline-block; width: 7%"  class="button " >In</button>
+		</div>
+		</div>
+		<div style="clear:both;">&nbsp;</div>
+		<button  style="margin-left: auto;
+    margin-right: auto;
+    display: block;     -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);" class="button icon icon ion-arrow-swap" onclick="flipit();"></button> 
+		<div style="clear:both;">&nbsp;</div>
+		<div id="seconddiv"  style=" text-align: center">
+		<label  style="display:inline-block; width: 80%; " class="item item-input"  >
+			<input placeholder="Pounds" type="number" id="pndTo" onkeyup="myFunction2()">
+		</label>
+			<button style="display:inline-block; width: 10%"  class="button " >Lb</button>		
+		</div>
+		
+		<div id="db2" style="display: none">
+		<div id="seconddivWt"  style=" text-align: center">
+		<label  style="display:inline-block; width: 80%; " class="item item-input"  >
+			<input placeholder="Pounds" type="number" id="pndTo2" onkeyup="myFunction2()">
+		</label>
+		<button style="display:inline-block; width: 10%"  class="button " >Lb</button>
+		
+		</div>
+		<div id="seconddivTemp"  style=" text-align: center">
+		<label  style="display:inline-block; width: 80%; " class="item item-input"  >
+			<input placeholder="Fahrenheit" type="number" id="fhTo" onkeyup="myFunction2()">
+		</label>
+			<button style="display:inline-block; width: 10%"  class="button " >°F</button>
+		</div>
+		<div id="seconddivHt"  style=" text-align: center">
+		<label style="display:inline-block; width: 80%; " class="item item-input"  >
+			<input placeholder="Centimeter" type="number" id="cmTo" onkeyup="myFunction2()">
+		</label>
+			<button style="display:inline-block; width: 10%"  class="button " >Cm</button>
+		</div>
+		</div>
+		</div>
+		<!-- /Converter -->
+		
+		<!-- 
+		<div style=" padding: 20px 20px 20px 20px; color: white; font-size: medium; height: 300px;">
+		<ion-slides >
+			<ion-slide-page>
+			  <div class="box cbox ">
+									<p style="text-align: center"><b>
+Michael Qaqish
+</b>, City Councillor for Gloucester-South Nepean</p>
+<button class="button" >Test</button>	
+                                   <p style="text-align: center; font-style: italic;">I would like to extend sincere congratulations to the Canada Bangladesh Education Trust (CBET) in recognition of your 4th annual fundraising dinner on October 2nd, 2016. The work you do for underprivileged scholars is inspiring. Thank you for your efforts and for a great night.</p>
+                                </div>
+			</ion-slide-page>
+			<ion-slide-page>
+			  <div class="box cbox ">
+									<p style="text-align: center"><b>
+Michael Qaqish
+</b>, City Councillor for Gloucester-South Nepean</p>	
+                                   <p style="text-align: center; font-style: italic;">I would like to extend sincere congratulations to the Canada Bangladesh Education Trust (CBET) in recognition of your 4th annual fundraising dinner on October 2nd, 2016. The work you do for underprivileged scholars is inspiring. Thank you for your efforts and for a great night.</p>
+                                </div>
+			</ion-slide-page>
+			<ion-slide-page>
+			  <div class="box cbox ">
+									<p style="text-align: center"><b>
+Michael Qaqish
+</b>, City Councillor for Gloucester-South Nepean</p>	
+                                   <p style="text-align: center; font-style: italic;">I would like to extend sincere congratulations to the Canada Bangladesh Education Trust (CBET) in recognition of your 4th annual fundraising dinner on October 2nd, 2016. The work you do for underprivileged scholars is inspiring. Thank you for your efforts and for a great night.</p>
+                                </div>
+			</ion-slide-page>
+		 </ion-slides>
+		</div>
+		-->
+  
+		<div class="card" style="width: 90%; text-align: center; margin: 0 auto;">
+		<div class="item item-divider" >
+			<h2 style="overflow: visible; text-overflow: clip; white-space: normal;">This app is dedicated to NuDay Syria Freedom School</h2>
+		  </div>
+		  <div class="item item-text-wrap" style="text-align: center; ">
+			
+			<img style="max-width: 200px" src="img/nuday.jpg"/>
+			<p></br></p>
+			<button onclick="window.open('http://www.nudaysyria.net/freedom-school.html', '_system', 'location=yes');" class="button button-assertive">
+			  Learn about Freedom School
+			</button><p></br></p>
+			<button onclick="window.plugins.socialsharing.share(null, null, null, 'https://play.google.com/store/apps/details?id=com.commongivinglabs.commonunitconverter')" class="button button-balanced">
+			  Share this App
+			</button>
+
+		  </div>
+		   <div class="item item-divider">
+			<h3 style="overflow: visible; text-overflow: clip; white-space: normal;"><a href="#" style="text-decoration: none; color: #000" onclick="window.open('http://labs.commongiving.org/', '_system', 'location=yes');">Explore More Projects</a></h3>
+		  </div>
+		</div>
+
+
+		<ion-footer>
+		<div style="text-align: center; margin-left: auto; margin-right: auto; padding-top: 15px; padding-bottom: 15px">
+		<p style="color: white; opacity: 0.5">Made by <b><a href="#" style="text-decoration: none; color: #fff" onclick="window.open('http://labs.commongiving.org/', '_system', 'location=yes');">Common Giving Labs</a></b></p>
+		</div>
+		</ion-footer>
+		
+		
+		<!--</ion-slide-page>
+	  
+	  <ion-slide-page>
+		<p>this is a new slide </p>
+	  </ion-slide-page>
+	  </ion-slides> -->
+      </ion-content>
+	  
+
+    </ion-pane>
+  </body>
+  <script>
+	$( document ).ready(function() {
+		$('.pane').css({"background-color":"#66cc66"});
+		$('.list').css({"background-color":"#66cc66"});
+		$('ion-header-bar').css({"background-color":"#66cc66"});	
+		$('.title').css({"color":"#ffffff"});
+	});
+	$(function(ready){
+
+	$("#dropDown").change(function(){
+		var input = $(this).val();    
+		if (input == 1)
+		{
+			$('.pane').css({"background-color":"#66cc66"});
+			$('.list').css({"background-color":"#66cc66"});
+			$('ion-header-bar').css({"background-color":"#66cc66"});
+			//$('#topImage').attr('src', 'img/scale3.png');
+		}
+		if (input == 2)
+		{
+			$('.pane').css({"background-color":"#4d79ff"});
+			$('.list').css({"background-color":"#4d79ff"});
+			$('ion-header-bar').css({"background-color":"#4d79ff"});
+			//$('#topImage').attr('src', 'img/ruler.png');			
+		}
+		if (input == 3)
+		{
+			$('.pane').css({"background-color":"#ff4d4d"});
+			$('.list').css({"background-color":"#ff4d4d"});
+			$('ion-header-bar').css({"background-color":"#ff4d4d"});	
+			//$('#topImage').attr('src', 'img/sun.png');
+		}
+		
+		
+	});
+	});
+  </script>
+ 
+</html>
